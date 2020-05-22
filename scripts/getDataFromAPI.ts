@@ -1,45 +1,43 @@
+// film id list-> film data list
+
 import 'dotenv/config'
 import fs from 'fs'
 import { promisify } from 'util'
 import fetch from 'node-fetch'
 
 interface Film {
-  year: string
   name: string
-  director: string
-  actors: string
-  date: string
+  doubanId: string
 }
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
-const getMovieId = (movieName: string) =>
-  fetch(
-    encodeURI(`https://movie.douban.com/j/subject_suggest?q=${movieName}%27,`)
-  )
 const getMovieInfo = (doubanID: string) =>
-  `https://api.douban.com/v2/movie/subject/?apikey=${doubanID}${process.env.KEY}`
+  fetch(
+    `https://api.douban.com/v2/movie/subject/${doubanID}?apikey=${process.env.KEY}`
+  )
 
 ;(async () => {
-  let data = await readFile('./test.json', 'utf8')
+  let data = await readFile('./data.json', 'utf8')
   const films = JSON.parse(data)
-
   console.log(films)
   const results = await Promise.all(
     films.map(async (film: Film) => {
-      console.log(`https://movie.douban.com/j/subject_suggest?q=${film.name}`)
-      console.log('1')
-      console.log(film)
-      const data = await getMovieId(film.name)
-      console.log('2')
-      console.log(data)
+      const data = await getMovieInfo(film.doubanId)
       const json = await data.json()
-      console.log('3')
-      console.log(json)
-      // data = data.find((d: any) => d.year === film.year)
-      return json
+      return {
+        name: film.name,
+        year: json.year,
+        id: film.doubanId,
+        type: json.genres,
+        rate: json.reviews_count,
+        story: json.summary,
+        director: json.director,
+        actor: json.cast,
+      }
     })
   )
   console.log(results)
+  writeFile('data/filmInfoByYear/1984.json', JSON.stringify(results))
 })()

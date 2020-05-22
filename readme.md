@@ -12,6 +12,8 @@ Google Sheet -> CSV -> JSON
 
 With typescript, no need for babel support. Because typescript is a superset of javascript, es5 features have already been supported.
 
+Use Cypress as web crawler
+
 ### Helpful
 
 [Basic node project setup](https://www.robinwieruch.de/minimal-node-js-babel-setup)
