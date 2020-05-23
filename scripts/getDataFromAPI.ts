@@ -12,7 +12,7 @@ interface Film {
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
-const YEAR = '1984'
+const YEAR = '1988'
 
 const getMovieInfo = (doubanID: string) =>
   fetch(
