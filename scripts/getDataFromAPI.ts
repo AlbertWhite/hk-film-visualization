@@ -12,6 +12,7 @@ interface Film {
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
+const YEAR = '1984'
 
 const getMovieInfo = (doubanID: string) =>
   fetch(
@@ -19,25 +20,32 @@ const getMovieInfo = (doubanID: string) =>
   )
 
 ;(async () => {
-  let data = await readFile('./data.json', 'utf8')
+  let data = await readFile(`./data/nameAndIdByYear/${YEAR}.json`, 'utf8')
   const films = JSON.parse(data)
-  console.log(films)
+
+  const wrongFilms: Film[] = []
   const results = await Promise.all(
     films.map(async (film: Film) => {
       const data = await getMovieInfo(film.doubanId)
       const json = await data.json()
+      if (json.year !== YEAR) {
+        wrongFilms.push(film)
+      }
       return {
         name: film.name,
         year: json.year,
         id: film.doubanId,
         type: json.genres,
-        rate: json.reviews_count,
+        rate: json.rating?.average,
         story: json.summary,
-        director: json.director,
-        actor: json.cast,
+        director: json.directors?.map((director: any) => director.name),
+        actor: json.casts?.map((cast: any) => cast.name),
       }
     })
   )
-  console.log(results)
-  writeFile('data/filmInfoByYear/1984.json', JSON.stringify(results))
+  //console.log(results)
+  writeFile(`data/filmInfoByYear/${YEAR}.json`, JSON.stringify(results))
+  console.log('write file success')
+  console.log('wrong films')
+  console.log(wrongFilms)
 })()
