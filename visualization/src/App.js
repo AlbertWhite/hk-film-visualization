@@ -34,7 +34,7 @@ const StyledModal = styled.div`
   z-index: 999;
   display: flex;
   width: 50%;
-  height: 50%;
+  height: auto;
   flex-direction: column;
   left: 20%;
   top: 20%;
@@ -78,9 +78,19 @@ const Link = styled.a`
   color: ${COLORS.YELLOW};
 `
 
+const About = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  cursor: pointer;
+`
+
 const App = ({ filmLists }) => {
-  const [shouldShowModal, setShouldShowModal] = React.useState(false)
   const [filmOnModal, setFilmOnModal] = React.useState(null)
+  const [shouldShowModal, setShouldShowModal] = React.useState(false)
+  const [shouldShowAboutModal, setShouldShowAboutModal] = React.useState(false)
 
   const [filters, setFilters] = React.useState(FILTERS)
 
@@ -129,6 +139,53 @@ const App = ({ filmLists }) => {
           </Modal>
         )}
       </Scrollable>
+      <About
+        onClick={() => {
+          setShouldShowAboutModal(true)
+        }}
+      >
+        关于本站
+      </About>
+      {shouldShowAboutModal && (
+        <Modal>
+          <StyledModal>
+            <Cross
+              onClick={() => {
+                setShouldShowAboutModal(false)
+              }}
+            >
+              关闭
+            </Cross>
+            <Box>
+              <b>1. 这个网站怎么用？</b>
+            </Box>
+            <p>
+              电影按照豆瓣评分排序。点击Filter筛选电影类型。点击电影显示详情。
+            </p>
+            <Box>
+              <b>2. 数据来源是什么？</b>
+            </Box>
+            <p>通过Cypress按照片名获得豆瓣ID。通过豆瓣API获得数据。</p>
+            <Box>
+              <b>3. 为什么设计这么丑？</b>
+            </Box>
+            <p>
+              <del>我不是设计师</del>。丑的设计永不落伍。
+            </p>
+            <Box>
+              <b>4. 为什么是1979-2002？</b>
+            </Box>
+            <p>
+              1979年是香港电影新浪潮的开始。2002年是合拍片浪潮的开始，
+              <del>一个时代的结束</del>。
+            </p>
+            <Box>
+              <b>5. 为什么要做这个网站？</b>
+            </Box>
+            <p>致敬香港电影，打捞片海遗珠。</p>
+          </StyledModal>
+        </Modal>
+      )}
     </Container>
   )
 }
