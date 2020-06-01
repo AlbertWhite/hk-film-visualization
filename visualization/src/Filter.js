@@ -7,6 +7,13 @@ const FilterContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @media screen and (max-width: 992px) {
+    width: 90%;
+    overflow-x: scroll;
+    justify-content: inherit;
+    margin-left: 2%;
+  }
 `
 
 export default ({ filters, setFilters }) => {

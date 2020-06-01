@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Modal from './Modal'
 import Filter from './Filter'
+import Films from './Films'
 import get from 'lodash.get'
 import { FILTERS, COLORS } from './constant'
 import { withDataContext } from './DataProvider'
@@ -21,34 +22,11 @@ const FixedContainer = styled.div`
   background: black;
 `
 
-const FilmContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 140px;
-  width: 3000px;
-`
-
 const Scrollable = styled.div`
   overflow: scroll;
   width: 96%;
   height: ${window.screen.height - 120}px;
   margin-left: 2%;
-`
-
-const FilmBar = styled.div`
-  flex: 1;
-  flex-direction: column;
-  border-right: 1px solid #ffffff59;
-  margin-right: 10px;
-`
-
-const Film = styled.div`
-  border-radius: 100%;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `
 
 const StyledModal = styled.div`
@@ -88,12 +66,6 @@ const SubTitle = styled.div`
   font-size: 20px;
 `
 
-const Year = styled.div`
-  font-weight: bold;
-  font-size: 20px;
-  padding: 10px 0;
-`
-
 const Name = styled.div`
   font-size: 25px;
 `
@@ -122,62 +94,40 @@ const App = ({ filmLists }) => {
         <Filter filters={filters} setFilters={setFilters} />
       </FixedContainer>
       <Scrollable>
-        <FilmContainer>
-          {filmLists.map((filmList, key) => (
-            <FilmBar>
-              <>
-                <Year>{key + 1979}</Year>
-                {filmList.map((film) => {
-                  const shouldShowFilm = get(film, 'type', []).some((filter) =>
-                    filters.includes(filter)
-                  )
-                  if (shouldShowFilm) {
-                    return (
-                      <Film
-                        onClick={() => {
-                          setShouldShowModal(true)
-                          console.log(film)
-                          setFilmOnModal(film)
-                        }}
-                      >
-                        {film.name}
-                      </Film>
-                    )
-                  }
-                  return null
-                })}
-              </>
-            </FilmBar>
-          ))}
-          {shouldShowModal && (
-            <Modal>
-              <StyledModal>
-                <Cross
-                  onClick={() => {
-                    setShouldShowModal(false)
-                  }}
+        <Films
+          filters={filters}
+          filmLists={filmLists}
+          setShouldShowModal={setShouldShowModal}
+          setFilmOnModal={setFilmOnModal}
+        />
+        {shouldShowModal && (
+          <Modal>
+            <StyledModal>
+              <Cross
+                onClick={() => {
+                  setShouldShowModal(false)
+                }}
+              >
+                关闭
+              </Cross>
+              <Name>
+                {filmOnModal.name} ({filmOnModal.year})
+              </Name>
+              <Box>类型: {get(filmOnModal, 'type', '').toString()}</Box>
+              <div>豆瓣评分: {get(filmOnModal, 'rate', '').toString()}</div>
+              <Box>主演: {get(filmOnModal, 'actor', '').toString()}</Box>
+              <div>故事简介: {get(filmOnModal, 'story', '').toString()}</div>
+              <Box>
+                <Link
+                  href={`https://movie.douban.com/subject/${filmOnModal.id}`}
+                  target="_blank"
                 >
-                  关闭
-                </Cross>
-                <Name>
-                  {filmOnModal.name} ({filmOnModal.year})
-                </Name>
-                <Box>类型: {get(filmOnModal, 'type', '').toString()}</Box>
-                <div>豆瓣评分: {get(filmOnModal, 'rate', '').toString()}</div>
-                <Box>主演: {get(filmOnModal, 'actor', '').toString()}</Box>
-                <div>故事简介: {get(filmOnModal, 'story', '').toString()}</div>
-                <Box>
-                  <Link
-                    href={`https://movie.douban.com/subject/${filmOnModal.id}`}
-                    target="_blank"
-                  >
-                    查看豆瓣页面
-                  </Link>
-                </Box>
-              </StyledModal>
-            </Modal>
-          )}
-        </FilmContainer>
+                  查看豆瓣页面
+                </Link>
+              </Box>
+            </StyledModal>
+          </Modal>
+        )}
       </Scrollable>
     </Container>
   )
