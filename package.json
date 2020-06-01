@@ -4,6 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:AlbertWhite/hk-film-visualization.git",
   "author": "yuebaiXu <xyb1114@gmail.com>",
+  "homepage": "https://albertwhite.github.io/hk-film-visualization/",
   "scripts": {
     "getData": "ts-node-dev --respawn --transpileOnly --no-notify scripts/getDataFromApi",
     "cypress": "cypress open",
