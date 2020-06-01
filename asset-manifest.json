@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/hk-film-visualization/static/css/main.6ed91520.chunk.css",
+    "main.js": "/hk-film-visualization/static/js/main.4f268de8.chunk.js",
+    "main.js.map": "/hk-film-visualization/static/js/main.4f268de8.chunk.js.map",
+    "runtime-main.js": "/hk-film-visualization/static/js/runtime-main.6ec66db4.js",
+    "runtime-main.js.map": "/hk-film-visualization/static/js/runtime-main.6ec66db4.js.map",
+    "static/js/2.3dc80d11.chunk.js": "/hk-film-visualization/static/js/2.3dc80d11.chunk.js",
+    "static/js/2.3dc80d11.chunk.js.map": "/hk-film-visualization/static/js/2.3dc80d11.chunk.js.map",
+    "index.html": "/hk-film-visualization/index.html",
+    "precache-manifest.cdab5898b9171b432f6000fddf96820f.js": "/hk-film-visualization/precache-manifest.cdab5898b9171b432f6000fddf96820f.js",
+    "service-worker.js": "/hk-film-visualization/service-worker.js",
+    "static/css/main.6ed91520.chunk.css.map": "/hk-film-visualization/static/css/main.6ed91520.chunk.css.map",
+    "static/js/2.3dc80d11.chunk.js.LICENSE.txt": "/hk-film-visualization/static/js/2.3dc80d11.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/hk-film-visualization/static/media/hkfont.d34ff4c6.ttc"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6ec66db4.js",
+    "static/js/2.3dc80d11.chunk.js",
+    "static/css/main.6ed91520.chunk.css",
+    "static/js/main.4f268de8.chunk.js"
+  ]
+}
