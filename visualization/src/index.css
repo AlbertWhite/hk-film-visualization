@@ -1,0 +1,41 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  font-size: 17px;
+  font-family: 'hkfont';
+  background: black;
+}
+
+#portal {
+  font-family: 'hkfont';
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@font-face {
+  font-family: 'hkfont';
+  src: local('hkfont'), url(./fonts/hkfont.ttc) format('truetype');
+}

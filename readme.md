@@ -14,6 +14,10 @@ With typescript, no need for babel support. Because typescript is a superset of 
 
 Use Cypress as web crawler
 
+Not suitable to use typescript for d3 or nvd3.
+
+fuck d3. d3 is going in the inverse way for development. why it devides into different lib ? why the doc is fucking difficult ?
+
 ### Helpful
 
 [Basic node project setup](https://www.robinwieruch.de/minimal-node-js-babel-setup)
