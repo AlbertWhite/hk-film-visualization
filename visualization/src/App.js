@@ -70,7 +70,7 @@ const ScrollerLeft = styled.div`
   cursor: pointer;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid ${COLORS.YELLOW};
+  border-right: 10px solid white;
   padding-left: 30px;
   margin-top: 10%;
   @media screen and (max-width: 992px) {
@@ -85,7 +85,7 @@ const ScrollerRight = styled.div`
   cursor: pointer;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-left: 10px solid ${COLORS.YELLOW};
+  border-left: 10px solid white;
   padding-right: 30px;
   margin-top: 10%;
   @media screen and (max-width: 992px) {
