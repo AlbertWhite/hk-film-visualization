@@ -86,6 +86,8 @@ Maybe the design of the website is kind of "awful", but it quites suit the subje
 
 The website is in simplified Chinese because the data comes from douban.com, a Chinese website.
 
+![](https://raw.githubusercontent.com/AlbertWhite/hk-film-visualization/master/visualization/screenshot.png)
+
 ## How to visit
 
 [https://hkfilm.netlify.app/](https://hkfilm.netlify.app/)
