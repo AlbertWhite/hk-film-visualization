@@ -1,24 +1,91 @@
-1. Make a list (google sheet) of HK film from 1984 - 2019. Google Sheet
-2. Export Google Sheet to Json file.
-3. Use https://movie.douban.com/j/subject_suggest?q=互动杀人事件 to get ID. (Write a node project to add into json file)
-4. Use https://api.douban.com/v2/movie/subject/1308381?apikey=0df993c66c0c636e29ecbb5344252a4a to write into json file for more information.
+# Hong kong films list from 1979 - 2002
 
-Google Sheet -> CSV -> JSON
+[https://hkfilm.netlify.app/](https://hkfilm.netlify.app/)
 
-### Techno
+## Tools
 
-要么 Nodemon (or node-dev) + Babel Node。
-要么 Typescript 就不要 babel 了。ts-node-dev (include ts-node） (autorestart)
+NodeJs, Cypress, React, Google Analytics
 
-With typescript, no need for babel support. Because typescript is a superset of javascript, es5 features have already been supported.
+## How I build it
 
-Use Cypress as web crawler
+#### 1. List of movie names -> List of movie ids
 
-Not suitable to use typescript for d3 or nvd3.
+The aim for the first step is to get id (imdb id, or doubanId). With id, we can acquire more information with IMDB API or Douban API. (Douban is the largest website for movie, book information in China).
 
-fuck d3. d3 is going in the inverse way for development. why it devides into different lib ? why the doc is fucking difficult ?
+The first step takes most of the time. I have known the idea [web crawler](https://en.wikipedia.org/wiki/Web_crawler) or [web scraping](https://en.wikipedia.org/wiki/Web_scraping) and I want to give it try. However, as a javascript developer, I am looking for a solution based on javascript.
+[Cypress](https://www.cypress.io/) comes into my mind. It is a end to end test tool and it works like a human. What if it can extract the information and log it locally ? With `cy.writeFile()`, it can be easily done.
 
-### Helpful
+My final solution is to search in google with Cypress, and extract the id from the url.
 
-[Basic node project setup](https://www.robinwieruch.de/minimal-node-js-babel-setup)
-[Node with ts](https://medium.com/javascript-in-plain-english/typescript-with-node-and-express-js-why-when-and-how-eb6bc73edd5d)
+```js
+describe('get doubanId', () => {
+  it('get doubanId', () => {
+    cy.visit('https://www.google.com/webhp')
+    cy.get('.gLFyf').type(`豆瓣`)
+
+    film1979.forEach((name) => {
+      cy.get('.gLFyf').clear().type(`${name} 豆瓣 1979{enter}`)
+      cy.get('.r')
+        .first()
+        .find('a')
+        .invoke('attr', 'href')
+        .then((url) => {
+          cy.writeFile(
+            'data/nameAndIdByYear/1979.json',
+            {
+              name,
+              doubanId: url.match(/\d+/g)[0],
+            },
+            { flag: 'a+' }
+          )
+        })
+    })
+  })
+})
+```
+
+#### 2. List of movie ids -> List of movie info
+
+How to query the same API 100 times and get an array of data ? `Promise.all()` helps with it.
+
+```js
+const results = await Promise.all(
+  films.map(async (film: Film) => {
+    if (film.doubanId !== '404') {
+      const data = await getMovieInfo(film.doubanId)
+      const json = await data.json()
+      if (json.year !== YEAR) {
+        wrongFilms.push(film)
+      }
+      return {
+        name: film.name,
+        year: json.year,
+        id: film.doubanId,
+        type: json.genres,
+        rate: json.rating?.average,
+        story: json.summary,
+        director: json.directors?.map((director: any) => director.name),
+        actor: json.casts?.map((cast: any) => cast.name),
+      }
+    }
+    return {
+      name: film.name,
+      year: YEAR,
+    }
+  })
+)
+```
+
+#### 3. List of movie info -> Visualization
+
+I use React, because it's the fastest way for me to build a UI interface. I have also tried to improve the performance with `React.PureComponent.`
+
+This website may attracts (or not) people from many regions because there are huge funs everywhere in the world ! So I add google analytics to track the region of visits.
+
+Maybe the design of the website is kind of "awful", but it quites suit the subject I think. They are really old movies (40 ~ 20 years ago), but they are the best in my mind. It's the best period for the movie industry in Hong kong.
+
+The website is in simplified Chinese because the data comes from douban.com, a Chinese website.
+
+## How to visit
+
+[https://hkfilm.netlify.app/](https://hkfilm.netlify.app/)

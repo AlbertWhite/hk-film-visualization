@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { FILTERS } from './constant'
 
-const FilterContainer = styled.div`
+const FiltersContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,26 +16,32 @@ const FilterContainer = styled.div`
   }
 `
 
+const FilterContainer = styled.div`
+  margin-left: 5px;
+`
+
 export default ({ filters, setFilters }) => {
   return (
-    <FilterContainer>
+    <FiltersContainer>
       <>
-        <input
-          type="checkbox"
-          id="全选"
-          name="全选"
-          checked={filters.length === FILTERS.length}
-          onChange={() => {
-            filters.length === FILTERS.length
-              ? setFilters([])
-              : setFilters(FILTERS)
-          }}
-        />
-        <label for="全选">全选</label>
+        <FilterContainer>
+          <input
+            type="checkbox"
+            id="全选"
+            name="全选"
+            checked={filters.length === FILTERS.length}
+            onChange={() => {
+              filters.length === FILTERS.length
+                ? setFilters([])
+                : setFilters(FILTERS)
+            }}
+          />
+          <label for="全选">全选</label>
+        </FilterContainer>
         {FILTERS.map((filter) => {
           const isChecked = filters.includes(filter)
           return (
-            <>
+            <FilterContainer>
               <input
                 type="checkbox"
                 id={filter}
@@ -49,10 +55,10 @@ export default ({ filters, setFilters }) => {
                 }}
               />
               <label htmlFor={filter}>{filter}</label>
-            </>
+            </FilterContainer>
           )
         })}
       </>
-    </FilterContainer>
+    </FiltersContainer>
   )
 }

@@ -5,8 +5,12 @@ import get from 'lodash.get'
 const FilmContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 140px;
-  width: 3000px;
+  margin-top: 180px;
+  width: 3400px;
+
+  @media screen and (max-width: 992px) {
+    margin-top: 220px;
+  }
 `
 
 const Year = styled.div`
@@ -31,7 +35,13 @@ const Film = styled.div`
   }
 `
 
-const Films = ({ filmLists, filters, setShouldShowModal, setFilmOnModal }) => (
+const Films = ({
+  filmLists,
+  filters,
+  setShouldShowModal,
+  setFilmOnModal,
+  filmsContainer,
+}) => (
   <FilmContainer>
     {filmLists.map((filmList, key) => (
       <FilmBar>
