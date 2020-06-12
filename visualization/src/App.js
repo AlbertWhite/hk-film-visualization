@@ -111,7 +111,7 @@ const App = ({ filmLists }) => {
   const [shouldShowModal, setShouldShowModal] = React.useState(false)
   const [shouldShowAboutModal, setShouldShowAboutModal] = React.useState(false)
   const filmsContainer = React.useRef(null)
-  const [filters, setFilters] = React.useState('喜剧')
+  const [filters, setFilters] = React.useState(['喜剧'])
 
   return (
     <Container>

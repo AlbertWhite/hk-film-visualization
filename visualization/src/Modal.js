@@ -24,6 +24,8 @@ const StyledModal = styled.div`
     left: 7%;
     top: 5%;
     width: 80%;
+    overflow-y: scroll;
+    height: 80%;
   }
 `
 
@@ -35,6 +37,9 @@ const Cross = styled.div`
 `
 const Name = styled.div`
   font-size: 25px;
+  @media screen and (max-width: 992px) {
+    margin-top: 25px;
+  }
 `
 
 const Box = styled.div`
