@@ -64,6 +64,22 @@ const About = styled.div`
   }
 `
 
+const Luck = styled.div`
+  position: absolute;
+  right: 120px;
+  top: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  cursor: pointer;
+
+  @media screen and (max-width: 992px) {
+    right: auto;
+    top: auto;
+    bottom: 20px;
+    right: 120px;
+  }
+`
+
 const ScrollerLeft = styled.div`
   width: 0;
   height: 0;
@@ -153,6 +169,19 @@ const App = ({ filmLists }) => {
           filmOnModal={filmOnModal}
         />
       )}
+      <Luck
+        onClick={() => {
+          const randomFilmList =
+            filmLists[Math.floor(Math.random() * filmLists.length)]
+          const randomFilm =
+            randomFilmList[Math.floor(Math.random() * randomFilmList.length)]
+          console.log(randomFilm)
+          setFilmOnModal(randomFilm)
+          setShouldShowModal(true)
+        }}
+      >
+        手气不错
+      </Luck>
       <About
         onClick={() => {
           setShouldShowAboutModal(true)
